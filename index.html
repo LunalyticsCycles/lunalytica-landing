@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lunalytica — Cycle Intelligence</title>
+  <meta name="description" content="Lunalytica is a cycle intelligence app that combines 15 years of fertility expertise with AI to build you a personalized supplement protocol." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --midnight: #0a0a0f;
+      --midnight-2: #111118;
+      --midnight-3: #16161f;
+      --gold: #C9A84C;
+      --gold-light: #e0c070;
+      --gold-dim: rgba(201,168,76,0.15);
+      --cream: #f5f0e8;
+      --cream-dim: rgba(245,240,232,0.6);
+      --cream-muted: rgba(245,240,232,0.35);
+      --sage: #8a9e8a;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--midnight);
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* GRAIN OVERLAY */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.5rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to bottom, rgba(10,10,15,0.95), transparent);
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      color: var(--cream);
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .nav-logo span { color: var(--gold); }
+
+    .nav-cta {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+      border: 1px solid rgba(201,168,76,0.4);
+      padding: 0.6rem 1.4rem;
+      transition: all 0.3s ease;
+    }
+
+    .nav-cta:hover {
+      background: var(--gold);
+      color: var(--midnight);
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 8rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,168,76,0.06) 0%, transparent 70%),
+                  radial-gradient(ellipse 40% 40% at 80% 20%, rgba(138,158,138,0.04) 0%, transparent 60%);
+    }
+
+    .moon-circle {
+      position: absolute;
+      top: 10%;
+      right: 8%;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, rgba(201,168,76,0.08) 0%, transparent 60%);
+      border: 1px solid rgba(201,168,76,0.08);
+      animation: moonFloat 8s ease-in-out infinite;
+    }
+
+    .moon-circle::before {
+      content: '';
+      position: absolute;
+      top: 15%;
+      left: 15%;
+      right: 30%;
+      bottom: 30%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,76,0.05) 0%, transparent 70%);
+      border: 1px solid rgba(201,168,76,0.06);
+    }
+
+    @keyframes moonFloat {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-15px) rotate(3deg); }
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.2s forwards;
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 6vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      max-width: 780px;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.4s forwards;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+
+    .hero-body {
+      font-size: 1.05rem;
+      color: var(--cream-dim);
+      max-width: 560px;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.6s forwards;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.8s forwards;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--midnight);
+      background: var(--gold);
+      padding: 1rem 2.8rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold-light);
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+
+    .btn-primary:hover::before { transform: translateX(0); }
+    .btn-primary span { position: relative; z-index: 1; }
+
+    .btn-secondary {
+      font-size: 0.75rem;
+      color: var(--cream-muted);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: color 0.3s ease;
+    }
+
+    .btn-secondary:hover { color: var(--cream); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 1.2s forwards;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.2); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* SECTIONS */
+    section { padding: 7rem 2rem; position: relative; }
+
+    .container { max-width: 1100px; margin: 0 auto; }
+    .container-narrow { max-width: 780px; margin: 0 auto; }
+
+    .section-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-body {
+      font-size: 1rem;
+      color: var(--cream-dim);
+      line-height: 1.8;
+    }
+
+    /* FADE IN ON SCROLL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* PROBLEM SECTION */
+    .problem {
+      background: var(--midnight-2);
+      border-top: 1px solid rgba(201,168,76,0.08);
+      border-bottom: 1px solid rgba(201,168,76,0.08);
+    }
+
+    .problem-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .problem-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .moon-diagram {
+      width: 260px;
+      height: 260px;
+      position: relative;
+    }
+
+    .moon-diagram svg { width: 100%; height: 100%; }
+
+    /* SOLUTION */
+    .solution { background: var(--midnight); }
+
+    .solution-intro {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: rgba(201,168,76,0.1);
+    }
+
+    .feature-card {
+      background: var(--midnight);
+      padding: 2.5rem 2rem;
+      transition: background 0.3s ease;
+    }
+
+    .feature-card:hover { background: var(--midnight-3); }
+
+    .feature-num {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 300;
+      color: rgba(201,168,76,0.2);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .feature-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+      color: var(--cream);
+    }
+
+    .feature-body {
+      font-size: 0.9rem;
+      color: var(--cream-dim);
+      line-height: 1.7;
+    }
+
+    /* AUDIENCE */
+    .audience { background: var(--midnight-2); }
+
+    .audience-intro {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+
+    .audience-card {
+      border: 1px solid rgba(201,168,76,0.12);
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s ease;
+    }
+
+    .audience-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 0;
+      background: var(--gold);
+      transition: height 0.3s ease;
+    }
+
+    .audience-card:hover { border-color: rgba(201,168,76,0.3); }
+    .audience-card:hover::before { height: 100%; }
+
+    .audience-title {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+      color: var(--cream);
+    }
+
+    .audience-body {
+      font-size: 0.9rem;
+      color: var(--cream-dim);
+      line-height: 1.7;
+    }
+
+    /* HOW IT WORKS */
+    .how { background: var(--midnight); }
+
+    .how-intro { text-align: center; margin-bottom: 4rem; }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      position: relative;
+    }
+
+    .steps::before {
+      content: '';
+      position: absolute;
+      top: 2.2rem;
+      left: 16%;
+      right: 16%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      opacity: 0.3;
+    }
+
+    .step {
+      text-align: center;
+      padding: 0 2rem;
+      position: relative;
+    }
+
+    .step-num {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--gold);
+      background: var(--midnight);
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-title {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+
+    .step-body {
+      font-size: 0.9rem;
+      color: var(--cream-dim);
+      line-height: 1.7;
+    }
+
+    .how-cta {
+      text-align: center;
+      margin-top: 4rem;
+    }
+
+    /* TESTIMONIALS */
+    .testimonials { background: var(--midnight-2); }
+    .testimonials-intro { text-align: center; margin-bottom: 3rem; }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .testimonial-card {
+      border: 1px solid rgba(201,168,76,0.1);
+      padding: 2rem;
+      position: relative;
+    }
+
+    .testimonial-card::before {
+      content: '\201C';
+      font-family: var(--font-display);
+      font-size: 4rem;
+      color: var(--gold);
+      opacity: 0.2;
+      position: absolute;
+      top: 0.5rem;
+      left: 1.5rem;
+      line-height: 1;
+    }
+
+    .testimonial-text {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--cream-dim);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      padding-top: 1.5rem;
+    }
+
+    .testimonial-author {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* FOUNDING MEMBER CTA */
+    .founding {
+      background: var(--midnight-3);
+      border-top: 1px solid rgba(201,168,76,0.1);
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .founding-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(201,168,76,0.04) 0%, transparent 70%);
+    }
+
+    .founding-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--midnight);
+      background: var(--gold);
+      padding: 0.4rem 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .founding h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .founding-body {
+      font-size: 1rem;
+      color: var(--cream-dim);
+      max-width: 560px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .price-display {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      margin-bottom: 2rem;
+    }
+
+    .price-display strong {
+      font-size: 2.5rem;
+      font-weight: 300;
+    }
+
+    .founding-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    /* FAQ */
+    .faq { background: var(--midnight); }
+    .faq-intro { text-align: center; margin-bottom: 3rem; }
+
+    .faq-list { max-width: 720px; margin: 0 auto; }
+
+    .faq-item {
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+    }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 1.5rem 0;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--cream);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      transition: color 0.3s ease;
+    }
+
+    .faq-question:hover { color: var(--gold); }
+
+    .faq-icon {
+      width: 1.2rem;
+      height: 1.2rem;
+      flex-shrink: 0;
+      color: var(--gold);
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+
+    .faq-item.open .faq-answer { max-height: 300px; }
+
+    .faq-answer-inner {
+      font-size: 0.95rem;
+      color: var(--cream-dim);
+      line-height: 1.8;
+      padding-bottom: 1.5rem;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--midnight-2);
+      border-top: 1px solid rgba(201,168,76,0.08);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cream);
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-tagline {
+      font-size: 0.8rem;
+      color: var(--cream-muted);
+      letter-spacing: 0.08em;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-links a {
+      font-size: 0.75rem;
+      color: var(--cream-muted);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover { color: var(--gold); }
+
+    .footer-copy {
+      font-size: 0.75rem;
+      color: rgba(245,240,232,0.2);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .problem-layout { grid-template-columns: 1fr; gap: 3rem; }
+      .problem-visual { display: none; }
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .audience-grid { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; gap: 2.5rem; }
+      .steps::before { display: none; }
+      .testimonial-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .features-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 2.4rem; }
+      section { padding: 5rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Luna<span>lytica</span></a>
+    <a href="https://lunalytica.app" class="nav-cta">Try Free</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="moon-circle"></div>
+    <p class="hero-eyebrow">Cycle Intelligence</p>
+    <h1>Your hormones have a story.<br><em>Now you can read it.</em></h1>
+    <p class="hero-body">Lunalytica is a cycle intelligence app that combines 15 years of fertility expertise with AI to build you a personalized supplement protocol — based on your actual labs, your BBT, your symptoms, and your cycle. Not a generic stack. Yours.</p>
+    <div class="hero-actions">
+      <a href="https://lunalytica.app" class="btn-primary"><span>Run Your Free Analysis</span></a>
+      <a href="#founding" class="btn-secondary">Or become a founding member →</a>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="problem">
+    <div class="container">
+      <div class="problem-layout">
+        <div class="reveal">
+          <p class="section-eyebrow">The Problem</p>
+          <h2 class="section-title">Generic supplement advice isn't working — because your hormones aren't generic.</h2>
+          <p class="section-body">Most women with hormonal concerns — whether they're trying to conceive, managing PCOS, navigating perimenopause, or dealing with cycle irregularities — end up piecing together supplement protocols from Google, Reddit, or a 10-minute doctor appointment. The advice is well-meaning but one-size-fits-all. And hormones don't work that way.</p>
+          <br>
+          <p class="section-body">What your body needs in your luteal phase is different from what someone else needs. What helps PCOS looks different from what helps perimenopause. The difference between a protocol that actually works and one that doesn't often comes down to whether it was built for you — or for nobody in particular.</p>
+        </div>
+        <div class="problem-visual reveal">
+          <div class="moon-diagram">
+            <svg viewBox="0 0 260 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="130" cy="130" r="120" stroke="rgba(201,168,76,0.12)" stroke-width="1"/>
+              <circle cx="130" cy="130" r="90" stroke="rgba(201,168,76,0.08)" stroke-width="1"/>
+              <circle cx="130" cy="130" r="60" stroke="rgba(201,168,76,0.06)" stroke-width="1"/>
+              <!-- crescent -->
+              <path d="M130 30 C80 30 40 75 40 130 C40 185 80 230 130 230 C100 210 80 172 80 130 C80 88 100 50 130 30Z" fill="rgba(201,168,76,0.06)" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
+              <!-- dots at phase points -->
+              <circle cx="130" cy="10" r="3" fill="rgba(201,168,76,0.5)"/>
+              <circle cx="250" cy="130" r="3" fill="rgba(201,168,76,0.3)"/>
+              <circle cx="130" cy="250" r="3" fill="rgba(201,168,76,0.3)"/>
+              <circle cx="10" cy="130" r="3" fill="rgba(201,168,76,0.3)"/>
+              <!-- phase labels -->
+              <text x="108" y="6" font-family="DM Sans" font-size="8" fill="rgba(201,168,76,0.6)" letter-spacing="1">DAY 1</text>
+              <text x="220" y="134" font-family="DM Sans" font-size="8" fill="rgba(201,168,76,0.4)" letter-spacing="1">OV</text>
+              <text x="98" y="258" font-family="DM Sans" font-size="8" fill="rgba(201,168,76,0.4)" letter-spacing="1">LUTEAL</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUTION -->
+  <section class="solution">
+    <div class="container">
+      <div class="solution-intro reveal">
+        <p class="section-eyebrow">The Solution</p>
+        <h2 class="section-title">Practitioner-level insight.<br>Without the waitlist.</h2>
+        <p class="section-body" style="max-width:580px;margin:0 auto;">Lunalytica was built by a fertility acupuncturist who spent 15 years watching women struggle to get personalized hormonal support. It applies the same clinical framework used in a real practice — but to your data, on your timeline, for free.</p>
+      </div>
+      <div class="features-grid reveal">
+        <div class="feature-card">
+          <div class="feature-num">01</div>
+          <div class="feature-title">Built on Clinical Expertise</div>
+          <p class="feature-body">Not an algorithm. A framework developed over 15 years of treating women's hormonal health.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-num">02</div>
+          <div class="feature-title">Personalized to Your Data</div>
+          <p class="feature-body">Your labs, your BBT, your symptoms, your cycle day. All of it matters.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-num">03</div>
+          <div class="feature-title">Protocols That Make Sense</div>
+          <p class="feature-body">Understand not just what to take, but why — based on what your body is actually showing.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-num">04</div>
+          <div class="feature-title">Specific Brand Recommendations</div>
+          <p class="feature-body">Not just what to take — which brand to buy. Vetted supplement recommendations so there's no guesswork.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-num">05</div>
+          <div class="feature-title">Lab Testing Recommendations</div>
+          <p class="feature-body">Not sure what labs to order? Lunalytica tells you exactly which tests to run based on your symptoms and goals.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-num">06</div>
+          <div class="feature-title">Free to Try. No Account Needed.</div>
+          <p class="feature-body">Run your first full analysis without signing up for anything.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUDIENCE -->
+  <section class="audience">
+    <div class="container">
+      <div class="audience-intro reveal">
+        <p class="section-eyebrow">Who It's For</p>
+        <h2 class="section-title">Made for women who want real answers.</h2>
+      </div>
+      <div class="audience-grid">
+        <div class="audience-card reveal">
+          <div class="audience-title">Trying to Conceive</div>
+          <p class="audience-body">You're tracking everything. Lunalytica helps you understand what your data is actually telling you and what your body may need to support conception.</p>
+        </div>
+        <div class="audience-card reveal">
+          <div class="audience-title">Managing PCOS</div>
+          <p class="audience-body">PCOS is not one thing. Lunalytica builds around your specific pattern — your labs, your cycle, your symptoms.</p>
+        </div>
+        <div class="audience-card reveal">
+          <div class="audience-title">Navigating Perimenopause</div>
+          <p class="audience-body">Hormonal shifts in perimenopause are real and often dismissed. Lunalytica takes them seriously and gives you a starting point for support.</p>
+        </div>
+        <div class="audience-card reveal">
+          <div class="audience-title">Optimizing Your Cycle</div>
+          <p class="audience-body">You don't need a diagnosis to want to understand your hormones better. Lunalytica meets you wherever you are.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how">
+    <div class="container">
+      <div class="how-intro reveal">
+        <p class="section-eyebrow">How It Works</p>
+        <h2 class="section-title">Three steps to a protocol<br>that's actually yours.</h2>
+      </div>
+      <div class="steps reveal">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-title">Enter Your Data</div>
+          <p class="step-body">Upload your lab results, log your BBT, describe your symptoms and cycle patterns. The more context you give, the more specific your protocol.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-title">Lunalytica Analyzes It</div>
+          <p class="step-body">Our AI applies a clinical framework developed from 15 years of fertility practice to your specific hormonal picture.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-title">Get Your Protocol</div>
+          <p class="step-body">Receive a personalized supplement protocol — specific brands, doses, and timing — with clear explanations of what, why, and how much.</p>
+        </div>
+      </div>
+      <div class="how-cta reveal">
+        <a href="https://lunalytica.app" class="btn-primary"><span>Try It Free — No Account Required</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <div class="container">
+      <div class="testimonials-intro reveal">
+        <p class="section-eyebrow">What Women Are Saying</p>
+        <h2 class="section-title">Early beta feedback.</h2>
+      </div>
+      <div class="testimonial-grid reveal" style="grid-template-columns: 1fr; max-width: 520px; margin: 0 auto;">
+        <div class="testimonial-card">
+          <p class="testimonial-text">I'm obsessed. I'm using the supplement tracker every day.</p>
+          <p class="testimonial-author">Beta User</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOUNDING MEMBER CTA -->
+  <section class="founding" id="founding">
+    <div class="founding-bg"></div>
+    <div class="container-narrow" style="position:relative;">
+      <div class="reveal">
+        <div class="founding-badge">Founding Member Offer</div>
+        <h2>Be one of the first 100.</h2>
+        <p class="founding-body">Lunalytica is in beta and growing. For the first 100 founding members, we're locking in access at $59/year — forever. This is for the women who believe that personalized hormonal support shouldn't require a $400 consultation or a six-month waitlist.</p>
+        <div class="price-display"><strong>$59</strong> / year &nbsp;·&nbsp; Locked forever &nbsp;·&nbsp; First 100 only</div>
+        <div class="founding-actions">
+          <a href="https://buy.stripe.com/5kQ5kE0rE6UcdBz2ilfrW00" class="btn-primary"><span>Claim Your Founding Member Spot</span></a>
+          <a href="https://lunalytica.app" class="btn-secondary">Or try the free analysis first →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="container">
+      <div class="faq-intro reveal">
+        <p class="section-eyebrow">Questions</p>
+        <h2 class="section-title">FAQ</h2>
+      </div>
+      <div class="faq-list reveal">
+        <div class="faq-item">
+          <button class="faq-question">
+            Is this a replacement for my doctor or practitioner?
+            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-answer"><p class="faq-answer-inner">No — and it's not meant to be. Lunalytica gives you a starting point and helps you understand your hormonal picture more clearly. We always recommend working with a qualified practitioner, especially if you're trying to conceive or managing a diagnosed condition.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            What do I need to run an analysis?
+            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-answer"><p class="faq-answer-inner">The more data you have the better, but you don't need everything. You can run an analysis with just your symptoms and cycle information, and add labs or BBT data as you have it.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            Is my data private?
+            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-answer"><p class="faq-answer-inner">Yes. Your health data is yours and is never sold or shared.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            What if I don't have lab work?
+            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-answer"><p class="faq-answer-inner">Lunalytica can still generate useful insights from your symptoms, cycle patterns, and BBT data alone. Lab results add depth but aren't required.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            Does Lunalytica tell me what labs to get?
+            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-answer"><p class="faq-answer-inner">Yes. Based on your symptoms and goals, Lunalytica recommends specific lab tests to run — so you can bring the list to your doctor, request them through a patient portal, or order direct-to-consumer. Once you have results, you can feed them back in for a more precise protocol.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            How is this different from other hormone apps?
+            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-answer"><p class="faq-answer-inner">Most hormone apps track your cycle. Lunalytica analyzes it — using a clinical framework developed from 15 years of fertility practice — and tells you what to do about what it finds.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Lunalytica</div>
+    <p class="footer-tagline">Cycle intelligence, built by a practitioner.</p>
+    <div class="footer-links">
+      <a href="https://lunalytica.app">App</a>
+      <a href="mailto:support@lunalytica.app">support@lunalytica.app</a>
+      <a href="https://lunalytica.app/#privacy">Privacy Policy</a>
+      <a href="https://lunalytica.app/#terms">Terms of Use</a>
+    </div>
+    <p class="footer-copy">© 2026 Lunalytica. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // FAQ accordion
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
